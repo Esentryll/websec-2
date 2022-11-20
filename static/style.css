@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    background-color: #f5f7fc;
+}
+
+:root {
+    --select-border: #a6d5fa;
+    --select-focus: blue;
+    --select-arrow: var(--select-border);
+}
+
+table {
+    box-shadow: 0px 5px 7px #bfccdc;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    margin: 40px 0px 40px 0px;
+}
+
+table td {
+    padding: 10px 5px 10px 10px;
+    color: #262626;
+    border: 1px solid #a6d5fa;
+}
+
+select {
+    width: 100%;
+    min-width: 15ch;
+    max-width: 30ch;
+    border: 1px solid var(--select-border);
+    border-radius: 5px;
+    padding: 16px 32px;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+    box-shadow: 0px 3px 10px #bfccdc;
+}
+
+select::-ms-expand {
+    display: none;
+    border: 1px solid #a6d5fa;
+}
+
+.schedule-container {
+    width: 60%;
+    margin: 0 auto;
+}
+
+#schedule {
+    margin: 10px auto;
+}
+
+.schedule-container__header, .schedule-container__mobile-actions  {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0px 0px 0px;
+}
+
+#currentWeek {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 20px;
+    color: #2780e3;
+}
+
+button {
+    font-size: 20px;
+    background-color: white;
+    border: 1px solid #a6d5fa;
+    border-radius: 5px;
+    color: black;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    box-shadow: 0px 3px 10px #bfccdc;
+}
+
+button:hover {
+    background-color: #2780e3;
+    color: #deeefc;
+    box-shadow: 0px 3px 10px #bfccdc;
+}
+
+.first-row{
+    line-height: 1.5;
+    color: #373a3c;
+    font-size: 20px;
+    text-align: center;
+}
+
+.one-row{
+    line-height: 1.5;
+    color: #373a3c;
+
+    text-align: left;
+}
+
+.one-cell{
+    vertical-align: top;
+}
+
+.text-style1 {
+    font-size: 16px;
+    line-height: 25px;
+    letter-spacing: .15px;
+    font-weight: 500;
+}
+
+a{
+    color: #2780e3;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+#previousDay, #nextDay {
+    display: none;
+}
+
+@media screen and (max-width: 481px) {
+    button {
+        font-size: 10px;
+        padding: 4px 8px;
+        margin: 2px 1px;
+        height: 30px;
+    }
+
+    #currentWeek {
+        font-size: 10px;
+    }
+
+    select {
+        min-width: 6ch;
+        max-width: 15ch;
+        max-height: 25px;
+        padding: 5px 10px;
+        font-size: 10px;
+        margin-top: 5px;
+    }
+
+    .schedule-container {
+        width: 100%;
+        margin: 0 auto;
+    }
+}
