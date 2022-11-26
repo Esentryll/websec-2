@@ -26,16 +26,16 @@ table td {
 }
 
 select {
-    width: 100%;
+    width: 20%;
     min-width: 15ch;
     max-width: 30ch;
     border: 1px solid var(--select-border);
     border-radius: 5px;
     padding: 16px 32px;
-    font-size: 20px;
     cursor: pointer;
     line-height: 1.1;
     background-color: #fff;
+    font-size: 14px;
     box-shadow: 0px 3px 10px #bfccdc;
 }
 
@@ -44,8 +44,13 @@ select::-ms-expand {
     border: 1px solid #a6d5fa;
 }
 
+.select-fields {
+    text-align: center;
+    width: 50%;
+}
+
 .schedule-container {
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -55,7 +60,7 @@ select::-ms-expand {
 
 .schedule-container__header, .schedule-container__mobile-actions  {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     margin: 20px 0px 0px 0px;
 }
 
@@ -64,6 +69,7 @@ select::-ms-expand {
     font-size: 24px;
     line-height: 20px;
     color: #2780e3;
+    text-align: center;
 }
 
 button {
@@ -72,7 +78,7 @@ button {
     border: 1px solid #a6d5fa;
     border-radius: 5px;
     color: black;
-    padding: 16px 32px;
+    padding: 8px 16px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -102,6 +108,11 @@ button:hover {
     text-align: left;
 }
 
+#previousButton, #nextButton {
+    height: 10%;
+    margin-top: 40px;
+}
+
 .one-cell{
     vertical-align: top;
 }
@@ -124,6 +135,14 @@ a{
     display: none;
 }
 
+#select, #selectTeacher {
+    width: 250px;
+}
+
+#select {
+    margin-bottom: 10px;
+}
+
 @media screen and (max-width: 481px) {
     button {
         font-size: 10px;
@@ -134,6 +153,10 @@ a{
 
     #currentWeek {
         font-size: 10px;
+    }
+
+    #select, #selectTeacher {
+        width: 100px;
     }
 
     select {
@@ -148,5 +171,10 @@ a{
     .schedule-container {
         width: 100%;
         margin: 0 auto;
+    }
+
+    #previousButton, #nextButton {
+        height: 10%;
+        margin-top: 0;
     }
 }

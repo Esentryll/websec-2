@@ -7,6 +7,7 @@ let path = require('path');
 let app = express();
 let server = http.Server(app);
 let bp = require('body-parser');
+const fs = require("fs");
 
 app.use(express.static(__dirname + '/static'));
 app.use(bp.json());
@@ -118,30 +119,72 @@ app.get('/rasp', (req, res) => {
 })
 
 app.get('/getGroups', (req, res) => {
-    let request = new XMLHttpRequest();
-    let url = "https://ssau.ru/rasp/faculty/492430598?course=4";
+    let readyStateCount = 0;
+    let result = { groups: [] };
+    for (let i = 1; i < 6; i++) {
+        let request = new XMLHttpRequest();
+        let url = "https://ssau.ru/rasp/faculty/492430598?course=" + i;
 
-    request.open("GET", url, true);
-    request.send(null);
-    request.onreadystatechange = () => {
-        if (request.readyState == 4) {
-            let root = HTMLParser.parse(request.responseText);
-            let groups = root.querySelectorAll(".group-catalog__groups > a");
-            let result = { groups: [] };
-            for (let group of groups) {
-                console.log(group.innerText);
-                let ind1 = 0;
-                while (!isNumber(group.toString()[ind1]) && ind1 < 100) ind1++;
-                let ind2 = ind1;
-                while (isNumber(group.toString()[ind2]) && ind2 < 100) ind2++;
-                while (group.toString()[ind1] !== "?" && ind1 > 0) ind1--;
-                let id = group.toString().slice(ind1, ind2);
-                result.groups.push({ name: group.innerText, link: `/rasp${id}` })
+        request.open("GET", url, true);
+        request.send(null);
+        request.onreadystatechange = () => {
+            if (request.readyState == 4) {
+                let root = HTMLParser.parse(request.responseText);
+                let groups = root.querySelectorAll(".group-catalog__groups > a");
+                for (let group of groups) {
+                    console.log(group.innerText);
+                    let ind1 = 0;
+                    while (!isNumber(group.toString()[ind1]) && ind1 < 100) ind1++;
+                    let ind2 = ind1;
+                    while (isNumber(group.toString()[ind2]) && ind2 < 100) ind2++;
+                    while (group.toString()[ind1] !== "?" && ind1 > 0) ind1--;
+                    let id = group.toString().slice(ind1, ind2);
+                    result.groups.push({ name: group.innerText, link: `/rasp${id}` })
+                }
+                readyStateCount++;
+                if (readyStateCount === 5)
+                    res.send(JSON.stringify(result));
             }
-            res.send(JSON.stringify(result));
-        }
-    };
+        };
+    }
 })
+
+app.get('/getTeachers', (req, res) => res.sendFile(path.join(__dirname, 'teachers.json')))
+
+function parseTeachers() {
+    let teachersString = [];
+    let result = { teachers: [] };
+    let readyStateCount = 0;
+    for (let i = 1; i < 116; i++) {
+        let request = new XMLHttpRequest();
+        let url = "https://ssau.ru/staff?page=" + i;
+        request.open("GET", url, true);
+        request.send(null);
+        request.onreadystatechange = () => {
+            if (request.readyState == 4) {
+                teachersString.push(request.responseText);
+                readyStateCount++;
+                if (readyStateCount === 115) {
+                    for (let teacher of teachersString) {
+                        let root = HTMLParser.parse(teacher);
+                        let teachers = root.querySelectorAll(".list-group-item > a");
+                        for (let t of teachers) {
+                            let staffId = t.getAttribute("href").replace(/\D/g, '');
+                            result.teachers.push({ name: t.innerText, link: `/rasp?staffId=${staffId}` });
+                        }
+                    }
+                    fs.writeFile('teachers.json', JSON.stringify(result), 'utf8', (err) => {
+                        if (err) {
+                            console.log('Error on writing file');
+                        }
+                        console.log('saved');
+                    });
+                }
+            }
+        };
+    }
+}
+// parseTeachers();
 
 function isNumber(char) {
     if (typeof char !== 'string') {

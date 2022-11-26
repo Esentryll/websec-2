@@ -12,14 +12,20 @@
 <div class="schedule-container">
     <div class="schedule-container__header">
         <button id="previousButton" onclick="changePage(false)">Предыдущая неделя</button>
-        <p id="currentWeek"></p>
-        <select id="select">
-            <option> Группа </option>
-        </select>
+        <div class="select-fields">
+            <select id="select">
+                <option> Группа </option>
+            </select>
+            <br>
+            <select id="selectTeacher">
+                <option> Учитель </option>
+            </select>
+            <p id="currentWeek"></p>
+        </div>
         <button id="nextButton" onclick="changePage(true)">Следующая неделя</button>
     </div>
     <div class="schedule-container__mobile-actions">
-        <button id="previousDay" onclick="changeDayOnMobile(false)">Предыдущий день</button>
+        <button id="previousDay" onclick="changeDayOnMobile(false)">Следующий день</button>
         <button id="nextDay" onclick="changeDayOnMobile(true)">Следующий день</button>
     </div>
     <table id="schedule"></table>
